@@ -10,3 +10,4 @@ pillow
 jupyter
 ipykernel
 torchinfo
+streamlit

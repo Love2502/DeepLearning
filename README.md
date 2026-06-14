@@ -37,6 +37,7 @@ oxford_pets_project/
 |-- slides/                   # Final presentation source and PDF
 |-- src/oxpets/               # Project code for data, models, training, metrics
 |-- main.py                   # Runs the project experiments
+|-- streamlit_app.py          # Live presentation demo
 |-- requirements.txt          # Python packages
 `-- README.md
 ```
@@ -58,6 +59,7 @@ Main packages:
 - scikit-learn
 - pillow
 - jupyter
+- streamlit
 
 ## Setup
 
@@ -108,6 +110,16 @@ python main.py --quick
 ```
 
 The full run downloads the dataset if needed, trains the models, evaluates the results, and creates the figures. The quick run only checks that training works.
+
+## Live Presentation Demo
+
+The project also includes a Streamlit app for the presentation.
+
+```bash
+streamlit run streamlit_app.py
+```
+
+The app shows dataset images, saved result figures, and a live training section where the CNN trains epoch by epoch.
 
 ## Final Documents
 
