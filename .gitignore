@@ -1,4 +1,5 @@
 .venv/
+.DS_Store
 __pycache__/
 *.pyc
 .ipynb_checkpoints/
@@ -19,6 +20,7 @@ reports/*.lot
 reports/*.out
 reports/*.toc
 reports/*.pdf
+reports/*.synctex.gz
 
 slides/*.aux
 slides/*.fls

@@ -10,7 +10,24 @@ The project compares:
 - **Model 1, from scratch**: a custom CNN with convolution, batch normalization, ReLU, max pooling, dropout, and fully connected layers.
 - **Model 2, alternative approach**: transfer learning with a pretrained ResNet18 backbone.
 
-## Quick Start
+## Quick Start, Simple Student Version
+
+The easiest way to run the project is the notebook:
+
+1. Open `notebooks/01_project_walkthrough.ipynb` in VS Code or Jupyter.
+2. Select the kernel `Oxford Pets Project`.
+3. Run all cells from top to bottom.
+
+The notebook loads the dataset, shows real Oxford Pets images, builds both models, runs a tiny training demo, and displays the final figures used in the report and presentation.
+
+The required exam documents are already here:
+
+- `reports/Project_Report.pdf`
+- `slides/Project_Presentation.pdf`
+
+## Optional Command Line Version
+
+Use this only if you want to regenerate everything from the terminal.
 
 Run these commands from this folder on macOS or Linux:
 
