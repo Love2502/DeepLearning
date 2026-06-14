@@ -30,6 +30,7 @@ def main() -> None:
     parser.add_argument("--limit-test", type=int, default=None)
     parser.add_argument("--download", action="store_true")
     parser.add_argument("--no-pretrained", action="store_true")
+    parser.add_argument("--run-name", default=None)
     args = parser.parse_args()
 
     ensure_output_dirs()
@@ -93,7 +94,7 @@ def main() -> None:
         "num_test_samples": len(y_true),
     })
 
-    run_name = f"{args.task}_{args.model}"
+    run_name = args.run_name or f"{args.task}_{args.model}"
     pd.DataFrame(history).to_csv(METRICS_DIR / f"{run_name}_history.csv", index=False)
     with (METRICS_DIR / f"{run_name}_metrics.json").open("w", encoding="utf-8") as handle:
         json.dump(metrics, handle, indent=2)

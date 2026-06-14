@@ -141,7 +141,7 @@ The alternative model uses ResNet18 pretrained on ImageNet. The convolutional ba
 
 \clearpage
 \section{Results}
-We produced the final results with \texttt{make train-laptop-final} followed by \texttt{make evaluate}. This command runs all four required combinations: scratch and transfer models for both breed and species classification. To keep the experiment practical on our laptop, the run uses stratified subsets of the official Oxford Pets splits: 370 test images for breed classification and 400 test images for species classification. The summary file is:
+We produced the final results by running the project training script for all four required combinations: scratch and transfer models for both breed and species classification. To keep the experiment practical on our laptop, the run uses stratified subsets of the official Oxford Pets splits: 370 test images for breed classification and 400 test images for species classification. The summary file is:
 \begin{center}
 \texttt{outputs/metrics/model\_comparison\_summary.csv}
 \end{center}

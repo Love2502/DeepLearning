@@ -1,187 +1,82 @@
 # Oxford Pets Deep Learning Project
 
-This project is built for the **Deep Learning and Big Data** project assignment. It uses the Oxford-IIIT Pet dataset to compare deep learning models on two tasks from the same dataset:
+## Project Overview
 
-1. **Breed classification**: 37-class image classification.
-2. **Species classification**: binary cat-vs-dog classification.
+This project was created for the **Deep Learning and Big Data** final project.
 
-The project compares:
+We use the Oxford-IIIT Pet dataset to classify pet images with PyTorch. The project compares two model types:
 
-- **Model 1, from scratch**: a custom CNN with convolution, batch normalization, ReLU, max pooling, dropout, and fully connected layers.
-- **Model 2, alternative approach**: transfer learning with a pretrained ResNet18 backbone.
+- a CNN trained from scratch
+- a ResNet18 transfer learning model
 
-## Quick Start, Simple Student Version
+The project includes two classification tasks:
 
-The easiest way to run the project is the notebook:
+- breed classification with 37 classes
+- species classification with 2 classes, cat and dog
 
-1. Open `notebooks/01_project_walkthrough.ipynb` in VS Code or Jupyter.
-2. Select the kernel `Oxford Pets Project`.
-3. Run all cells from top to bottom.
+## Dataset Description
 
-The notebook loads the dataset, shows real Oxford Pets images, builds both models, runs a tiny training demo, and displays the final figures used in the report and presentation.
+- Source: Oxford-IIIT Pet Dataset
+- Dataset link: <https://www.robots.ox.ac.uk/~vgg/data/pets/>
+- Number of classes: 37 pet breeds
+- Approximate size: about 200 images per class
+- Labels used in this project:
+  - breed label for multi-class classification
+  - cat/dog label for binary classification
 
-The required exam documents are already here:
+## Project Structure
 
-- `reports/Project_Report.pdf`
-- `slides/Project_Presentation.pdf`
-
-## Optional Command Line Version
-
-Use this only if you want to regenerate everything from the terminal.
-
-Run these commands from this folder on macOS or Linux:
-
-```bash
-make setup
-make data
-make visuals
-make smoke
+```text
+oxford_pets_project/
+|-- data/                     # Downloaded dataset, ignored by Git
+|-- docs/                     # Team notes and contribution plan
+|-- notebooks/                # Main project notebook
+|-- outputs/                  # Generated figures, metrics, and checkpoints
+|-- reports/                  # Final report source and PDF
+|-- scripts/                  # Python scripts used for experiments
+|-- slides/                   # Final presentation source and PDF
+|-- src/oxpets/               # Project code for data, models, training, metrics
+|-- main.py                   # Runs the project experiments
+|-- requirements.txt          # Python packages
+`-- README.md
 ```
 
-Then train all required experiments:
+## Requirements
 
-```bash
-make train-laptop-final
-make evaluate
-make visuals
-```
+Python 3.10 or newer is required. Python 3.11 is recommended.
 
-`make train-laptop-final` runs all four required combinations with stratified laptop-sized subsets. Use `make train` for the longer full-default training run.
+Required Python packages are listed in `requirements.txt`.
 
-Build the written deliverables:
+Main packages:
 
-```bash
-make report
-make slides
-```
+- torch
+- torchvision
+- numpy
+- pandas
+- matplotlib
+- seaborn
+- scikit-learn
+- pillow
+- jupyter
 
-On Windows, use the PowerShell commands in the Windows section below.
+## Setup
 
-## Run It Live
-
-If the environment is already created, activate it first:
+Create a virtual environment and install the packages.
 
 macOS or Linux:
-
-```bash
-source .venv/bin/activate
-```
-
-Windows PowerShell:
-
-```powershell
-.\.venv\Scripts\Activate.ps1
-```
-
-For a quick live check that loads the dataset, builds both models, runs forward passes, and trains tiny batches:
-
-macOS or Linux:
-
-```bash
-make smoke
-```
-
-Windows PowerShell:
-
-```powershell
-$env:PYTHONPATH="src"
-python scripts\smoke_test.py --download --tiny-overfit
-```
-
-For a short training demo that finishes much faster than the full project:
-
-macOS or Linux:
-
-```bash
-PYTHONPATH=src .venv/bin/python scripts/train_experiment.py --task species --model scratch --epochs 1 --limit-train 128 --limit-val 64 --limit-test 64 --image-size 96 --device cpu
-PYTHONPATH=src .venv/bin/python scripts/evaluate_results.py
-PYTHONPATH=src .venv/bin/python scripts/make_report_figures.py
-```
-
-Windows PowerShell:
-
-```powershell
-$env:PYTHONPATH="src"
-python scripts\train_experiment.py --task species --model scratch --epochs 1 --limit-train 128 --limit-val 64 --limit-test 64 --image-size 96 --device cpu
-python scripts\evaluate_results.py
-python scripts\make_report_figures.py
-```
-
-For the submitted experiment results, run:
-
-macOS or Linux:
-
-```bash
-make train-laptop-final
-make evaluate
-make visuals
-make report
-make slides
-```
-
-Windows PowerShell:
-
-```powershell
-$env:PYTHONPATH="src"
-python scripts\train_experiment.py --task breed --model scratch --epochs 3 --limit-train 370 --limit-val 111 --limit-test 370 --batch-size 32 --image-size 96 --device cpu
-python scripts\train_experiment.py --task breed --model transfer --epochs 3 --fine-tune-epochs 1 --limit-train 370 --limit-val 111 --limit-test 370 --batch-size 32 --image-size 96 --device cpu
-python scripts\train_experiment.py --task species --model scratch --epochs 3 --limit-train 400 --limit-val 120 --limit-test 400 --batch-size 32 --image-size 96 --device cpu
-python scripts\train_experiment.py --task species --model transfer --epochs 3 --fine-tune-epochs 1 --limit-train 400 --limit-val 120 --limit-test 400 --batch-size 32 --image-size 96 --device cpu
-python scripts\evaluate_results.py
-python scripts\make_report_figures.py
-```
-
-The full submitted run trains four model and task combinations, so it takes longer than the demo.
-
-## Manual Environment Setup
-
-Use Python 3.10 or newer. Python 3.11 is recommended.
-
-### macOS
-
-If `make setup` is not available on macOS, run:
-
-```bash
-/opt/homebrew/bin/python3.11 -m venv .venv
-source .venv/bin/activate
-python -m pip install --upgrade pip
-pip install -r requirements.txt
-python -m ipykernel install --user --name oxford-pets-project --display-name "Oxford Pets Project"
-```
-
-If `/opt/homebrew/bin/python3.11` does not exist, use:
 
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
-python -m pip install --upgrade pip
 pip install -r requirements.txt
 python -m ipykernel install --user --name oxford-pets-project --display-name "Oxford Pets Project"
 ```
 
-### Linux
-
-```bash
-python3 -m venv .venv
-source .venv/bin/activate
-python -m pip install --upgrade pip
-pip install -r requirements.txt
-python -m ipykernel install --user --name oxford-pets-project --display-name "Oxford Pets Project"
-```
-
-If `venv` is missing on Ubuntu or Debian, install it first:
-
-```bash
-sudo apt update
-sudo apt install python3-venv
-```
-
-### Windows PowerShell
+Windows PowerShell:
 
 ```powershell
 py -3.11 -m venv .venv
 .\.venv\Scripts\Activate.ps1
-python -m pip install --upgrade pip
 pip install -r requirements.txt
 python -m ipykernel install --user --name oxford-pets-project --display-name "Oxford Pets Project"
 ```
@@ -190,72 +85,56 @@ If PowerShell blocks activation, run this once in the same PowerShell window:
 
 ```powershell
 Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
-.\.venv\Scripts\Activate.ps1
 ```
 
-If `py -3.11` is not available, install Python 3.11 from <https://www.python.org/downloads/> and make sure it is added to PATH.
+## How to Run
 
-The official PyTorch instructions recommend Python 3.10 or newer.
+The easiest way to understand the project is the notebook:
 
-## Main Files
+1. Open `notebooks/01_project_walkthrough.ipynb`.
+2. Select the kernel `Oxford Pets Project`.
+3. Run all cells from top to bottom.
 
-- `src/oxpets/data.py`: Oxford Pets download, transforms, train/validation/test loaders.
-- `src/oxpets/models.py`: scratch CNN and transfer learning model.
-- `src/oxpets/train.py`: training and evaluation loops.
-- `src/oxpets/metrics.py`: accuracy, macro F1, confusion matrices, and plots.
-- `scripts/train_experiment.py`: train one model/task pair.
-- `scripts/make_report_figures.py`: generate dataset, augmentation, and prediction figures for the report and slides.
-- `notebooks/01_project_walkthrough.ipynb`: guided notebook for the project story.
-- `reports/Project_Report.tex`: 6-10 page report source.
-- `slides/Project_Presentation.tex`: presentation source.
-
-## Dataset
-
-Official dataset page: <https://www.robots.ox.ac.uk/~vgg/data/pets/>
-
-Torchvision dataset documentation: <https://docs.pytorch.org/vision/main/generated/torchvision.datasets.OxfordIIITPet.html>
-
-Oxford Pets contains 37 pet categories with roughly 200 images per class. The dataset also includes category labels, binary cat/dog labels, and segmentation trimaps. This project uses category and binary labels because they directly match the assignment option “multi-class classification + binary classification.”
-
-## Training Notes
-
-Defaults are laptop-friendly:
-
-- image size: `160x160`
-- batch size: `32`
-- scratch CNN: `8` epochs
-- transfer model: `5` frozen-head epochs plus `3` final-block fine-tuning epochs
-- device: Apple Silicon MPS if available, then CUDA, otherwise CPU
-
-For a quick demo run:
-
-macOS or Linux:
+To run the full project experiments from the terminal:
 
 ```bash
-PYTHONPATH=src .venv/bin/python scripts/train_experiment.py --task species --model scratch --epochs 1 --limit-train 128 --limit-val 64 --limit-test 64
+python main.py
 ```
 
-Windows PowerShell:
+For a shorter check before running the full experiments:
 
-```powershell
-$env:PYTHONPATH="src"
-python scripts\train_experiment.py --task species --model scratch --epochs 1 --limit-train 128 --limit-val 64 --limit-test 64
+```bash
+python main.py --quick
 ```
 
-## Course Material Connection
+The full run downloads the dataset if needed, trains the models, evaluates the results, and creates the figures. The quick run only checks that training works.
 
-The project follows the lecture material and notebooks on tensors, PyTorch datasets, layers, activation functions, convolution, loss functions, backpropagation, optimizers, dropout, validation, and model comparison. The report and slides include a short mapping from these course topics to the implementation.
+## Final Documents
+
+The final exam documents are included here:
+
+- `reports/Project_Report.pdf`
+- `slides/Project_Presentation.pdf`
 
 ## Outputs
 
-Result files go into:
+Generated files are saved in the `outputs/` folder:
 
-- `outputs/metrics/`: histories, JSON metrics, comparison CSV.
-- `outputs/figures/`: loss curves, confusion matrices, summary plots.
-- `outputs/checkpoints/`: saved model checkpoints.
+- `outputs/metrics/`: accuracy, macro F1, and training history files
+- `outputs/figures/`: dataset images, training curves, confusion matrices, and result plots
+- `outputs/checkpoints/`: trained model files
 
-These generated files are ignored by git so the repository stays lightweight.
+Downloaded data, model checkpoints, and generated outputs are ignored by Git.
 
-## Academic Integrity
+## Team Information
 
-The implementation is original project code written for this assignment. External sources used for facts or APIs must be cited in the report and slides, especially the Oxford dataset page, Torchvision documentation, PyTorch documentation, and the ResNet paper/model documentation where relevant.
+Team members:
+
+- Love
+- Jamal Dassrath
+- Erbakan Ahmad
+- Muhammad Ahtisham Bhatti
+
+## Academic Use
+
+This project was developed for a university deep learning assignment. The code is written for learning purposes, and the report and slides cite the dataset and library sources used in the project.

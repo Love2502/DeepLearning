@@ -14,7 +14,7 @@ from oxpets.train import evaluate, train_one_epoch
 def main() -> None:
     parser = argparse.ArgumentParser(description="Run quick project checks.")
     parser.add_argument("--download", action="store_true", help="Download Oxford Pets if needed.")
-    parser.add_argument("--tiny-overfit", action="store_true", help="Run one tiny optimization step per task.")
+    parser.add_argument("--training-check", action="store_true", help="Run a short training check per task.")
     args = parser.parse_args()
 
     set_seed(42)
@@ -45,14 +45,14 @@ def main() -> None:
             assert logits.shape == (images.size(0), spec.num_classes)
             print(f"{model_name} forward ok: logits={tuple(logits.shape)}")
 
-        if args.tiny_overfit:
+        if args.training_check:
             model = build_scratch_model(spec.num_classes).to(device)
             criterion = nn.CrossEntropyLoss()
             optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
             train_loss, train_acc = train_one_epoch(model, train_loader, criterion, optimizer, device)
             val_loss, val_acc, _, _ = evaluate(model, val_loader, criterion, device)
             print(
-                f"tiny train ok: train_loss={train_loss:.4f} train_acc={train_acc:.3f} "
+                f"training check ok: train_loss={train_loss:.4f} train_acc={train_acc:.3f} "
                 f"val_loss={val_loss:.4f} val_acc={val_acc:.3f}"
             )
 

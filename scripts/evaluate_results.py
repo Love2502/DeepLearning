@@ -26,7 +26,7 @@ def main() -> None:
     output_csv = METRICS_DIR / "model_comparison_summary.csv"
     summary.to_csv(output_csv, index=False)
     if summary.empty:
-        print("No metrics found yet. Run make train or scripts/train_experiment.py first.")
+        print("No metrics found yet. Run python main.py or scripts/train_experiment.py first.")
         return
     save_summary_barplot(output_csv, FIGURES_DIR / "model_comparison_summary.png")
     print(summary.sort_values(["task", "model"]).to_string(index=False))
