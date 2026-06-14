@@ -7,6 +7,7 @@ import pandas as pd
 import streamlit as st
 import torch
 from torch import nn
+from PIL import Image
 from torchvision import datasets
 
 
@@ -35,12 +36,13 @@ def load_raw_dataset():
 
 def show_image_grid() -> None:
     dataset = load_raw_dataset()
-    indices = [0, 280, 560, 840, 1120, 1400, 1680, 1960]
-    cols = st.columns(4)
+    indices = [0, 280, 560, 840, 1120, 1400]
+    cols = st.columns(2)
     for item_id, index in enumerate(indices):
         image, label = dataset[index]
-        with cols[item_id % 4]:
-            st.image(image, caption=BREED_CLASSES[int(label)], use_container_width=True)
+        caption = f"{BREED_CLASSES[int(label)]} | original image {image.width} x {image.height}"
+        with cols[item_id % 2]:
+            st.image(image, caption=caption, use_container_width=True)
 
 
 def show_saved_results() -> None:
@@ -61,13 +63,21 @@ def show_saved_results() -> None:
     for title, path in figures:
         if path.exists():
             st.subheader(title)
-            st.image(str(path), use_container_width=True)
+            image = Image.open(path)
+            st.caption(f"{image.width} x {image.height} result image")
+            st.image(image, use_container_width=True)
 
 
 def unnormalize(image_tensor: torch.Tensor) -> torch.Tensor:
     mean = torch.tensor([0.485, 0.456, 0.406]).view(3, 1, 1)
     std = torch.tensor([0.229, 0.224, 0.225]).view(3, 1, 1)
     return (image_tensor.cpu() * std + mean).clamp(0, 1)
+
+
+def tensor_to_display_image(image_tensor: torch.Tensor, size: int = 520) -> Image.Image:
+    image = unnormalize(image_tensor).permute(1, 2, 0).numpy()
+    image = Image.fromarray((image * 255).astype("uint8"))
+    return image.resize((size, size), Image.Resampling.LANCZOS)
 
 
 def show_predictions(model, loader, device: torch.device) -> None:
@@ -80,14 +90,14 @@ def show_predictions(model, loader, device: torch.device) -> None:
         confidence = probabilities.max(dim=1).values
 
     st.subheader("Prediction examples")
-    cols = st.columns(4)
+    cols = st.columns(2)
     for index in range(min(8, len(images))):
         true_label = SPECIES_CLASSES[int(labels[index])]
         predicted_label = SPECIES_CLASSES[int(predictions[index])]
         score = float(confidence[index])
         caption = f"true: {true_label} | pred: {predicted_label} ({score:.2f})"
-        with cols[index % 4]:
-            image = unnormalize(images[index]).permute(1, 2, 0).numpy()
+        with cols[index % 2]:
+            image = tensor_to_display_image(images[index])
             st.image(image, caption=caption, use_container_width=True)
 
 
@@ -188,7 +198,7 @@ def main() -> None:
         col1, col2, col3 = st.columns(3)
         epochs = col1.slider("Epochs", min_value=2, max_value=8, value=4)
         train_limit = col2.slider("Training images", min_value=256, max_value=1024, value=512, step=128)
-        image_size = col3.selectbox("Image size", [96, 128, 160], index=1)
+        image_size = col3.selectbox("Image size", [128, 160, 224], index=1)
 
         if st.button("Start live training", type="primary"):
             run_live_training(epochs=epochs, train_limit=train_limit, image_size=image_size)
