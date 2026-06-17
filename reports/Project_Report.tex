@@ -171,10 +171,10 @@ Split strategy & official test split, stratified train/validation subset \\
 \toprule
 Task & Model & Test Accuracy & Test Macro F1 \\
 \midrule
-Breed & Scratch CNN & 0.049 & 0.014 \\
-Breed & Transfer ResNet18 & 0.308 & 0.268 \\
-Species & Scratch CNN & 0.685 & 0.529 \\
-Species & Transfer ResNet18 & 0.898 & 0.877 \\
+Breed & Scratch CNN & 0.038 & 0.017 \\
+Breed & Transfer ResNet18 & 0.354 & 0.340 \\
+Species & Scratch CNN & 0.685 & 0.478 \\
+Species & Transfer ResNet18 & 0.885 & 0.862 \\
 \bottomrule
 \end{tabular}
 \caption{Final laptop run comparison from the generated metric CSV.}
@@ -253,10 +253,18 @@ Species & Transfer ResNet18 & 0.898 & 0.877 \\
 \end{figure}
 }{}
 
+\IfFileExists{../outputs/figures/breed_transfer_prediction_grid.png}{
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{breed_transfer_prediction_grid.png}
+\caption{Breed prediction examples from the transfer model. These images show the harder 37-class task directly, including correct predictions and typical mistakes between visually similar breeds.}
+\end{figure}
+}{}
+
 \section{Comparison and Discussion}
 The scratch CNN directly tests whether a model can learn useful visual features from the Oxford Pets training data alone. It is transparent and closely connected to the course topics, but it has limited prior knowledge and may require more data or training time.
 
-The transfer learning model starts with strong general image features from ImageNet. In the laptop run it clearly outperformed the scratch CNN on both tasks. For breed classification, transfer learning improved test accuracy from 0.049 to 0.308. For species classification, transfer learning improved test accuracy from 0.685 to 0.898 and macro F1 from 0.529 to 0.877. This supports the expectation that pretrained convolutional features transfer well to natural-image tasks.
+The transfer learning model starts with strong general image features from ImageNet. In the laptop run it clearly outperformed the scratch CNN on both tasks. For breed classification, transfer learning improved test accuracy from 0.038 to 0.354. For species classification, transfer learning improved test accuracy from 0.685 to 0.885 and macro F1 from 0.478 to 0.862. This supports the expectation that pretrained convolutional features transfer well to natural-image tasks.
 
 The difference between the two tasks is also important. Species classification is easier because the model only needs to separate cats from dogs. Breed classification is harder because it contains 37 classes, some breeds are visually similar, and the laptop run uses fewer examples per class. The comparison is useful for the course because the scratch model makes convolution, activation, loss, optimizer behavior, and regularization easy to explain, while the transfer model shows how pretrained features can improve performance in practice.
 

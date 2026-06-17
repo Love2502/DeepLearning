@@ -46,10 +46,10 @@ Each student should still understand the full project because the presentation i
 
 | Date | Student | Task | Model | Change | Result |
 |---|---|---|---|---|---|
-| June 2026 | Jamal Dassrath | species | scratch | laptop subset, 3 epochs | accuracy 0.685, macro F1 0.529 |
-| June 2026 | Jamal Dassrath | breed | scratch | laptop subset, 3 epochs | accuracy 0.049, macro F1 0.014 |
-| June 2026 | Erbakan Ahmad | species | transfer | pretrained ResNet18, 3 epochs plus 1 fine-tune epoch | accuracy 0.898, macro F1 0.877 |
-| June 2026 | Erbakan Ahmad | breed | transfer | pretrained ResNet18, 3 epochs plus 1 fine-tune epoch | accuracy 0.308, macro F1 0.268 |
+| June 2026 | Jamal Dassrath | species | scratch | laptop subset, 3 epochs | accuracy 0.685, macro F1 0.478 |
+| June 2026 | Jamal Dassrath | breed | scratch | laptop subset, 3 epochs | accuracy 0.038, macro F1 0.017 |
+| June 2026 | Erbakan Ahmad | species | transfer | pretrained ResNet18, 3 epochs plus 1 fine-tune epoch | accuracy 0.885, macro F1 0.862 |
+| June 2026 | Erbakan Ahmad | breed | transfer | pretrained ResNet18, 3 epochs plus 1 fine-tune epoch | accuracy 0.354, macro F1 0.340 |
 
 ## Contribution Log
 

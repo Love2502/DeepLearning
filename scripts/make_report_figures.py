@@ -118,10 +118,12 @@ def _unnormalize(image_tensor: torch.Tensor) -> np.ndarray:
 def _save_prediction_grid(
     selected: list[tuple[torch.Tensor, int, int, float]],
     output_path,
+    class_names: list[str],
     rows: int,
     cols: int,
     figsize: tuple[float, float],
     title: str,
+    fontsize: int = 12,
 ) -> None:
     fig, axes = plt.subplots(rows, cols, figsize=figsize)
     axes_list = list(np.atleast_1d(axes).flat)
@@ -130,8 +132,8 @@ def _save_prediction_grid(
         is_correct = label == prediction
         color = "#166534" if is_correct else "#b91c1c"
         ax.set_title(
-            f"true: {SPECIES_CLASSES[label]}\npred: {SPECIES_CLASSES[prediction]} ({score:.2f})",
-            fontsize=12,
+            f"true: {class_names[label]}\npred: {class_names[prediction]} ({score:.2f})",
+            fontsize=fontsize,
             color=color,
         )
         ax.axis("off")
@@ -183,6 +185,7 @@ def save_species_prediction_grid() -> None:
     _save_prediction_grid(
         selected,
         FIGURES_DIR / "species_transfer_prediction_grid.png",
+        SPECIES_CLASSES,
         rows=3,
         cols=4,
         figsize=(12, 9),
@@ -194,10 +197,59 @@ def save_species_prediction_grid() -> None:
     _save_prediction_grid(
         slide_selected,
         FIGURES_DIR / "species_transfer_prediction_slide.png",
+        SPECIES_CLASSES,
         rows=2,
         cols=4,
         figsize=(12, 6.6),
         title="Prediction examples: correct cases and mistakes",
+    )
+
+
+def save_breed_prediction_grid() -> None:
+    checkpoint_path = CHECKPOINT_DIR / "breed_transfer.pt"
+    if not checkpoint_path.exists():
+        print(f"Skipping breed prediction grid because {checkpoint_path} does not exist yet.")
+        return
+
+    config = TrainConfig(batch_size=32, image_size=96, num_workers=0)
+    _, _, test_loader, spec = make_loaders(
+        "breed",
+        config,
+        download=False,
+        limit_train=370,
+        limit_val=111,
+        limit_test=370,
+    )
+    model = build_transfer_model(spec.num_classes, freeze_backbone=False, pretrained=False)
+    checkpoint = torch.load(checkpoint_path, map_location="cpu")
+    model.load_state_dict(checkpoint["model_state_dict"])
+    model.eval()
+
+    examples: list[tuple[torch.Tensor, int, int, float]] = []
+    with torch.no_grad():
+        for images, labels in test_loader:
+            logits = model(images)
+            probabilities = torch.softmax(logits, dim=1)
+            predictions = probabilities.argmax(dim=1)
+            confidence = probabilities.max(dim=1).values
+            for image, label, prediction, score in zip(images, labels, predictions, confidence):
+                examples.append((image, int(label), int(prediction), float(score)))
+
+    correct = [row for row in examples if row[1] == row[2]]
+    mistakes = [row for row in examples if row[1] != row[2]]
+    selected = correct[:6] + mistakes[:6]
+    if len(selected) < 12:
+        selected = examples[:12]
+
+    _save_prediction_grid(
+        selected,
+        FIGURES_DIR / "breed_transfer_prediction_grid.png",
+        BREED_CLASSES,
+        rows=3,
+        cols=4,
+        figsize=(14, 10),
+        title="Breed transfer model predictions on test images",
+        fontsize=9,
     )
 
 
@@ -207,6 +259,7 @@ def main() -> None:
     save_distribution_plots()
     save_augmentation_preview()
     save_species_prediction_grid()
+    save_breed_prediction_grid()
     print("Saved report figures to", FIGURES_DIR)
 
 

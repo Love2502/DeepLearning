@@ -254,10 +254,10 @@ Species test subset & 400 stratified images \\
 \toprule
 Task & Model & Accuracy & Macro F1 \\
 \midrule
-Breed & Scratch CNN & 0.049 & 0.014 \\
-Breed & ResNet18 transfer & 0.308 & 0.268 \\
-Species & Scratch CNN & 0.685 & 0.529 \\
-Species & ResNet18 transfer & 0.898 & 0.877 \\
+Breed & Scratch CNN & 0.038 & 0.017 \\
+Breed & ResNet18 transfer & 0.354 & 0.340 \\
+Species & Scratch CNN & 0.685 & 0.478 \\
+Species & ResNet18 transfer & 0.885 & 0.862 \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -328,6 +328,13 @@ Species & ResNet18 transfer & 0.898 & 0.877 \\
 \IfFileExists{../outputs/figures/species_transfer_prediction_slide.png}{
 \centering
 \includegraphics[height=0.82\textheight,width=0.96\linewidth,keepaspectratio]{../outputs/figures/species_transfer_prediction_slide.png}
+}{}
+\end{frame}
+
+\begin{frame}{Breed Prediction Examples}
+\IfFileExists{../outputs/figures/breed_transfer_prediction_grid.png}{
+\centering
+\includegraphics[height=0.82\textheight,width=0.96\linewidth,keepaspectratio]{../outputs/figures/breed_transfer_prediction_grid.png}
 }{}
 \end{frame}
 

@@ -15,15 +15,14 @@ from oxpets.config import DATA_DIR, TrainConfig
 TaskName = Literal["breed", "species"]
 
 BREED_CLASSES = [
-    "Abyssinian", "Bengal", "Birman", "Bombay", "British Shorthair",
-    "Egyptian Mau", "Maine Coon", "Persian", "Ragdoll", "Russian Blue",
-    "Siamese", "Sphynx", "american bulldog", "american pit bull terrier",
-    "basset hound", "beagle", "boxer", "chihuahua", "english cocker spaniel",
-    "english setter", "german shorthaired", "great pyrenees", "havanese",
-    "japanese chin", "keeshond", "leonberger", "miniature pinscher",
-    "newfoundland", "pomeranian", "pug", "saint bernard", "samoyed",
-    "scottish terrier", "shiba inu", "staffordshire bull terrier",
-    "wheaten terrier", "yorkshire terrier",
+    "Abyssinian", "American Bulldog", "American Pit Bull Terrier", "Basset Hound",
+    "Beagle", "Bengal", "Birman", "Bombay", "Boxer", "British Shorthair",
+    "Chihuahua", "Egyptian Mau", "English Cocker Spaniel", "English Setter",
+    "German Shorthaired", "Great Pyrenees", "Havanese", "Japanese Chin",
+    "Keeshond", "Leonberger", "Maine Coon", "Miniature Pinscher", "Newfoundland",
+    "Persian", "Pomeranian", "Pug", "Ragdoll", "Russian Blue", "Saint Bernard",
+    "Samoyed", "Scottish Terrier", "Shiba Inu", "Siamese", "Sphynx",
+    "Staffordshire Bull Terrier", "Wheaten Terrier", "Yorkshire Terrier",
 ]
 SPECIES_CLASSES = ["cat", "dog"]
 

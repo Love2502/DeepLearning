@@ -8,10 +8,17 @@ from oxpets.config import FIGURES_DIR, METRICS_DIR, ensure_output_dirs
 from oxpets.metrics import save_summary_barplot
 
 
+FINAL_RUNS = ["breed_scratch", "breed_transfer", "species_scratch", "species_transfer"]
+
+
 def main() -> None:
     ensure_output_dirs()
     rows = []
-    for path in sorted(METRICS_DIR.glob("*_metrics.json")):
+    for run_name in FINAL_RUNS:
+        path = METRICS_DIR / f"{run_name}_metrics.json"
+        if not path.exists():
+            print(f"Missing metrics file: {path}")
+            continue
         with path.open("r", encoding="utf-8") as handle:
             metrics = json.load(handle)
         rows.append({
