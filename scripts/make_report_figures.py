@@ -152,14 +152,11 @@ def save_species_prediction_grid() -> None:
         print(f"Skipping prediction grid because {checkpoint_path} does not exist yet.")
         return
 
-    config = TrainConfig(batch_size=32, image_size=96, num_workers=0)
+    config = TrainConfig(batch_size=32, image_size=160, num_workers=0)
     _, _, test_loader, spec = make_loaders(
         "species",
         config,
         download=False,
-        limit_train=400,
-        limit_val=120,
-        limit_test=400,
     )
     model = build_transfer_model(spec.num_classes, freeze_backbone=False, pretrained=False)
     checkpoint = torch.load(checkpoint_path, map_location="cpu")
@@ -211,14 +208,11 @@ def save_breed_prediction_grid() -> None:
         print(f"Skipping breed prediction grid because {checkpoint_path} does not exist yet.")
         return
 
-    config = TrainConfig(batch_size=32, image_size=96, num_workers=0)
+    config = TrainConfig(batch_size=32, image_size=160, num_workers=0)
     _, _, test_loader, spec = make_loaders(
         "breed",
         config,
         download=False,
-        limit_train=370,
-        limit_val=111,
-        limit_test=370,
     )
     model = build_transfer_model(spec.num_classes, freeze_backbone=False, pretrained=False)
     checkpoint = torch.load(checkpoint_path, map_location="cpu")

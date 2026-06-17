@@ -112,7 +112,7 @@ The Oxford-IIIT Pet dataset contains 37 pet categories with roughly 200 images p
 
 \clearpage
 \section{Preprocessing and Splits}
-Images are resized and cropped before being passed into the models. The project defaults use a laptop-friendly resolution of $160 \times 160$. For the final run on our laptop, we used $96 \times 96$ images so that all four required experiments could finish in a reasonable time. Training uses random resized crops and horizontal flips for data augmentation. Validation and test images use deterministic resizing and center cropping. Pixel values are normalized with ImageNet mean and standard deviation, which is especially appropriate for the transfer learning model.
+Images are resized and cropped before being passed into the models. The final run uses $160 \times 160$ images, which gives the models more visual detail than the earlier quick checks. Training uses random resized crops and horizontal flips for data augmentation. Validation and test images use deterministic resizing and center cropping. Pixel values are normalized with ImageNet mean and standard deviation, which is especially appropriate for the transfer learning model.
 
 The official \texttt{trainval} split is divided into training and validation subsets with a fixed random seed. The official test split is kept separate for final evaluation. Reproducibility is supported through fixed seeds, scripted experiments, and saved metrics.
 
@@ -141,7 +141,7 @@ The alternative model uses ResNet18 pretrained on ImageNet. The convolutional ba
 
 \clearpage
 \section{Results}
-We produced the final results by running the project training script for all four required combinations: scratch and transfer models for both breed and species classification. To keep the experiment practical on our laptop, the run uses stratified subsets of the official Oxford Pets splits: 370 test images for breed classification and 400 test images for species classification. The summary file is:
+We produced the final results by running the project training script for all four required combinations: scratch and transfer models for both breed and species classification. The final run uses the official Oxford Pets trainval/test split. The trainval split is divided into training and validation data, while the official test split is kept unseen until final evaluation. The summary file is:
 \begin{center}
 \texttt{outputs/metrics/model\_comparison\_summary.csv}
 \end{center}
@@ -150,12 +150,13 @@ We produced the final results by running the project training script for all fou
 \centering
 \begin{tabular}{ll}
 \toprule
-Setting & Value used in the final laptop run \\
+Setting & Value used in the final run \\
 \midrule
-Image size & $96 \times 96$ \\
+Image size & $160 \times 160$ \\
 Batch size & 32 \\
-Scratch training & 3 epochs \\
-Transfer training & 3 frozen-head epochs + 1 fine-tuning epoch \\
+Scratch training & 8 epochs \\
+Transfer training & 5 frozen-head epochs + 3 fine-tuning epochs \\
+Dataset use & Official trainval/test split, no final subset limit \\
 Loss function & Cross-entropy loss \\
 Optimizer & AdamW, learning rate $10^{-3}$, weight decay $10^{-4}$ \\
 Split strategy & official test split, stratified train/validation subset \\
@@ -171,10 +172,10 @@ Split strategy & official test split, stratified train/validation subset \\
 \toprule
 Task & Model & Test Accuracy & Test Macro F1 \\
 \midrule
-Breed & Scratch CNN & 0.038 & 0.017 \\
-Breed & Transfer ResNet18 & 0.354 & 0.340 \\
-Species & Scratch CNN & 0.685 & 0.478 \\
-Species & Transfer ResNet18 & 0.885 & 0.862 \\
+Breed & Scratch CNN & 0.135 & 0.101 \\
+Breed & Transfer ResNet18 & 0.863 & 0.862 \\
+Species & Scratch CNN & 0.652 & 0.645 \\
+Species & Transfer ResNet18 & 0.984 & 0.981 \\
 \bottomrule
 \end{tabular}
 \caption{Final laptop run comparison from the generated metric CSV.}
@@ -264,13 +265,13 @@ Species & Transfer ResNet18 & 0.885 & 0.862 \\
 \section{Comparison and Discussion}
 The scratch CNN directly tests whether a model can learn useful visual features from the Oxford Pets training data alone. It is transparent and closely connected to the course topics, but it has limited prior knowledge and may require more data or training time.
 
-The transfer learning model starts with strong general image features from ImageNet. In the laptop run it clearly outperformed the scratch CNN on both tasks. For breed classification, transfer learning improved test accuracy from 0.038 to 0.354. For species classification, transfer learning improved test accuracy from 0.685 to 0.885 and macro F1 from 0.478 to 0.862. This supports the expectation that pretrained convolutional features transfer well to natural-image tasks.
+The transfer learning model starts with strong general image features from ImageNet. In the final run it clearly outperformed the scratch CNN on both tasks. For breed classification, transfer learning improved test accuracy from 0.135 to 0.863. For species classification, transfer learning improved test accuracy from 0.652 to 0.984 and macro F1 from 0.645 to 0.981. This supports the expectation that pretrained convolutional features transfer well to natural-image tasks.
 
-The difference between the two tasks is also important. Species classification is easier because the model only needs to separate cats from dogs. Breed classification is harder because it contains 37 classes, some breeds are visually similar, and the laptop run uses fewer examples per class. The comparison is useful for the course because the scratch model makes convolution, activation, loss, optimizer behavior, and regularization easy to explain, while the transfer model shows how pretrained features can improve performance in practice.
+The difference between the two tasks is also important. Species classification is easier because the model only needs to separate cats from dogs. Breed classification is harder because it contains 37 classes and some breeds are visually similar. The comparison is useful for the course because the scratch model makes convolution, activation, loss, optimizer behavior, and regularization easy to explain, while the transfer model shows how pretrained features can improve performance in practice.
 
 \clearpage
 \section{Limitations}
-The project uses moderate image resolution and short training runs so all students can run it on a laptop. The reported final results use stratified subsets rather than the full dataset, which makes the project reproducible in class but reduces the maximum possible accuracy. A longer full-dataset run with larger images would likely improve both models, especially the scratch CNN. Future work could include segmentation from the trimap annotations, larger image sizes, longer fine-tuning, or model interpretation methods such as Grad-CAM.
+The project uses the full official trainval/test split, but it is still a student project with limited training time compared with a benchmark-level experiment. The scratch CNN may need more epochs, stronger augmentation, or a larger architecture to become competitive on the 37-class breed task. The transfer model is stronger because it starts from ImageNet features, but more careful hyperparameter tuning could still improve it. Future work could include segmentation from the trimap annotations, longer fine-tuning, or model interpretation methods such as Grad-CAM.
 
 \section{Individual Contributions}
 \begin{itemize}

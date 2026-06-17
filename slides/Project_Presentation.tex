@@ -226,13 +226,13 @@ Linear head & classification logits \\
 \toprule
 Setting & Laptop run \\
 \midrule
-Image size & $96 \times 96$ \\
+Image size & $160 \times 160$ \\
 Optimizer & AdamW \\
 Loss & Cross-entropy \\
-Scratch training & 3 epochs \\
-Transfer training & 3 frozen-head epochs + 1 fine-tuning epoch \\
-Breed test subset & 370 stratified images \\
-Species test subset & 400 stratified images \\
+Scratch training & 8 epochs \\
+Transfer training & 5 frozen-head epochs + 3 fine-tuning epochs \\
+Dataset use & Official trainval/test split \\
+Final evaluation & Full official test split \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -254,10 +254,10 @@ Species test subset & 400 stratified images \\
 \toprule
 Task & Model & Accuracy & Macro F1 \\
 \midrule
-Breed & Scratch CNN & 0.038 & 0.017 \\
-Breed & ResNet18 transfer & 0.354 & 0.340 \\
-Species & Scratch CNN & 0.685 & 0.478 \\
-Species & ResNet18 transfer & 0.885 & 0.862 \\
+Breed & Scratch CNN & 0.135 & 0.101 \\
+Breed & ResNet18 transfer & 0.863 & 0.862 \\
+Species & Scratch CNN & 0.652 & 0.645 \\
+Species & ResNet18 transfer & 0.984 & 0.981 \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -352,14 +352,14 @@ Species & ResNet18 transfer & 0.885 & 0.862 \\
 \column{0.48\textwidth}
 \textbf{Limitations}
 \begin{itemize}
-    \item Our laptop run uses stratified subsets.
-    \item Image size is reduced to $96 \times 96$.
-    \item Short training favors transfer learning.
+    \item Training time is still limited for a class project.
+    \item The scratch CNN may need more epochs for 37 breeds.
+    \item Transfer learning has an advantage from ImageNet features.
 \end{itemize}
 \column{0.48\textwidth}
 \textbf{Next steps}
 \begin{itemize}
-    \item Run full dataset at $160 \times 160$.
+    \item Try longer training and larger image sizes.
     \item Train longer and tune learning rates.
     \item Add Grad-CAM interpretation.
     \item Try segmentation using trimaps.
