@@ -82,26 +82,27 @@ def save_summary_barplot(summary_csv: Path, output_path: Path) -> None:
     labels = frame["task"] + " / " + frame["model"]
     x = np.arange(len(frame))
     width = 0.35
-    plt.figure(figsize=(9, 5))
-    bars_accuracy = plt.bar(x - width / 2, frame["test_accuracy"], width, label="accuracy")
-    bars_f1 = plt.bar(x + width / 2, frame["test_macro_f1"], width, label="macro F1")
+    fig, ax = plt.subplots(figsize=(9, 5.2))
+    bars_accuracy = ax.bar(x - width / 2, frame["test_accuracy"], width, label="accuracy")
+    bars_f1 = ax.bar(x + width / 2, frame["test_macro_f1"], width, label="macro F1")
     for bars in (bars_accuracy, bars_f1):
         for bar in bars:
-            height = bar.get_height()
-            plt.text(
+            height = float(bar.get_height())
+            ax.text(
                 bar.get_x() + bar.get_width() / 2,
-                max(height, 0.02),
+                height + 0.018,
                 f"{height:.2f}",
                 ha="center",
                 va="bottom",
                 fontsize=9,
             )
-    plt.xticks(x, labels, rotation=30, ha="right")
-    plt.ylim(0, 1)
-    plt.ylabel("Score")
-    plt.title("Oxford Pets model comparison")
-    plt.legend()
-    plt.tight_layout()
+    ax.set_xticks(x)
+    ax.set_xticklabels(labels, rotation=30, ha="right")
+    ax.set_ylim(0, 1.08)
+    ax.set_ylabel("Score")
+    ax.set_title("Oxford Pets model comparison", pad=14)
+    ax.legend(loc="upper left")
+    fig.tight_layout()
     output_path.parent.mkdir(parents=True, exist_ok=True)
-    plt.savefig(output_path, dpi=200)
-    plt.close()
+    fig.savefig(output_path, dpi=200)
+    plt.close(fig)

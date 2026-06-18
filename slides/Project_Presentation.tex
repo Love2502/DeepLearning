@@ -165,7 +165,7 @@ Step & Implementation \\
 \midrule
 Download & \texttt{torchvision.datasets.OxfordIIITPet} \\
 Splits & official trainval/test, plus validation split \\
-Sampling & stratified smaller subsets for the laptop run \\
+Sampling & full official final run, demo subsets only in Streamlit \\
 Batching & PyTorch \texttt{DataLoader} \\
 Metrics & accuracy, macro F1, confusion matrix \\
 Artifacts & CSV, JSON, PNG figures, model checkpoints \\
@@ -224,7 +224,7 @@ Linear head & classification logits \\
 \begin{center}
 \begin{tabular}{ll}
 \toprule
-Setting & Laptop run \\
+Setting & Final run \\
 \midrule
 Image size & $160 \times 160$ \\
 Optimizer & AdamW \\
@@ -254,10 +254,10 @@ Final evaluation & Full official test split \\
 \toprule
 Task & Model & Accuracy & Macro F1 \\
 \midrule
-Breed & Scratch CNN & 0.135 & 0.101 \\
-Breed & ResNet18 transfer & 0.863 & 0.862 \\
-Species & Scratch CNN & 0.652 & 0.645 \\
-Species & ResNet18 transfer & 0.984 & 0.981 \\
+Breed & Scratch CNN & 0.129 & 0.094 \\
+Breed & ResNet18 transfer & 0.857 & 0.856 \\
+Species & Scratch CNN & 0.722 & 0.635 \\
+Species & ResNet18 transfer & 0.983 & 0.980 \\
 \bottomrule
 \end{tabular}
 \end{center}

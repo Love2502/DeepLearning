@@ -119,7 +119,7 @@ The project also includes a Streamlit app for the presentation.
 streamlit run streamlit_app.py
 ```
 
-The app shows dataset images, saved result figures, and a live training section where the CNN trains epoch by epoch.
+The app shows data exploration plots, real dataset images, saved result figures, and a live training section where the model trains epoch by epoch.
 
 ## Final Documents
 

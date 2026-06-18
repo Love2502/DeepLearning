@@ -63,14 +63,17 @@ def save_distribution_plots() -> None:
     axes[1].set_xticks(species_x)
     axes[1].set_xticklabels(SPECIES_CLASSES)
     axes[1].grid(axis="y", alpha=0.25)
+    max_species_count = max(species_counts.values())
+    axes[1].set_ylim(0, max_species_count * 1.18)
     for bar in bars:
         height = int(bar.get_height())
         axes[1].text(
             bar.get_x() + bar.get_width() / 2,
-            height + 15,
+            height + max_species_count * 0.025,
             str(height),
             ha="center",
             va="bottom",
+            fontsize=10,
         )
 
     fig.tight_layout()
