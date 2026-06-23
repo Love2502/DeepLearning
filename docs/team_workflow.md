@@ -4,8 +4,8 @@
 
 | Student | Main responsibility | Concrete outputs |
 |---|---|---|
-| Love | Dataset and EDA | Dataset notes, class distribution checks, sample image grid, reproducibility checks |
-| Jamal Dassrath | Scratch CNN | Architecture justification, training run, loss and accuracy plot |
+| Jamal Dassrath | Dataset, EDA, preprocessing figures, Streamlit demo | Dataset notes, class distribution checks, sample image grid, preprocessing figures, Streamlit app |
+| Love | Scratch CNN | Architecture justification, training run, loss and accuracy plot |
 | Erbakan Ahmad | Transfer learning | ResNet18 setup, fine-tuning run, comparison metrics |
 | Muhammad Ahtisham Bhatti | Report and slides | Final PDF report, final PDF slides, source citations, visual storytelling |
 
@@ -46,8 +46,8 @@ Each student should still understand the full project because the presentation i
 
 | Date | Student | Task | Model | Change | Result |
 |---|---|---|---|---|---|
-| June 2026 | Jamal Dassrath | species | scratch | full trainval/test run, 8 epochs | accuracy 0.722, macro F1 0.635 |
-| June 2026 | Jamal Dassrath | breed | scratch | full trainval/test run, 8 epochs | accuracy 0.129, macro F1 0.094 |
+| June 2026 | Love | species | scratch | full trainval/test run, 8 epochs | accuracy 0.722, macro F1 0.635 |
+| June 2026 | Love | breed | scratch | full trainval/test run, 8 epochs | accuracy 0.129, macro F1 0.094 |
 | June 2026 | Erbakan Ahmad | species | transfer | pretrained ResNet18, 5 head epochs plus 3 fine-tune epochs | accuracy 0.983, macro F1 0.980 |
 | June 2026 | Erbakan Ahmad | breed | transfer | pretrained ResNet18, 5 head epochs plus 3 fine-tune epochs | accuracy 0.857, macro F1 0.856 |
 
@@ -55,8 +55,8 @@ Each student should still understand the full project because the presentation i
 
 | Student | Contribution | Evidence |
 |---|---|---|
-| Love | Dataset loading, EDA figures, reproducibility checks | `scripts/prepare_data.py`, `scripts/make_report_figures.py`, dataset figures |
-| Jamal Dassrath | Scratch CNN implementation and experiments | `src/oxpets/models.py`, scratch checkpoints, scratch history plots |
+| Jamal Dassrath | Dataset loading, EDA figures, preprocessing figures, Streamlit demo | `scripts/prepare_data.py`, `scripts/make_report_figures.py`, dataset figures, `streamlit_app.py` |
+| Love | Scratch CNN implementation and experiments | `src/oxpets/models.py`, scratch checkpoints, scratch history plots |
 | Erbakan Ahmad | Transfer learning setup and fine-tuning experiments | transfer checkpoints, transfer metrics, confusion matrices |
 | Muhammad Ahtisham Bhatti | Report, slides, comparison, citations | `reports/Project_Report.pdf`, `slides/Project_Presentation.pdf` |
 

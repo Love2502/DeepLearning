@@ -22,7 +22,7 @@ class TrainConfig:
     image_size: int = 160
     batch_size: int = 32
     num_workers: int = 2
-    seed: int = 42
+    seed: int = 23
     scratch_epochs: int = 8
     transfer_epochs: int = 5
     fine_tune_epochs: int = 3
@@ -51,7 +51,7 @@ def select_device(preferred: str | None = None) -> torch.device:
     return torch.device("cpu")
 
 
-def set_seed(seed: int = 42) -> None:
+def set_seed(seed: int = 23) -> None:
     random.seed(seed)
     np.random.seed(seed)
     torch.manual_seed(seed)
