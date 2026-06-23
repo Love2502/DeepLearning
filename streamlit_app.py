@@ -223,7 +223,7 @@ def show_predictions(model, loader, device: torch.device, class_names: list[str]
 
 
 def run_live_training(task: str, model_name: str, epochs: int, train_limit: int, image_size: int) -> None:
-    set_seed(42)
+    set_seed(23)
     device = select_device()
     config = TrainConfig(image_size=image_size, batch_size=16, num_workers=0)
 
