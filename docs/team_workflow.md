@@ -58,7 +58,7 @@ Each student should still understand the full project because the presentation i
 | Love | Dataset loading, EDA figures, reproducibility checks | `scripts/prepare_data.py`, `scripts/make_report_figures.py`, dataset figures |
 | Jamal Dassrath | Scratch CNN implementation and experiments | `src/oxpets/models.py`, scratch checkpoints, scratch history plots |
 | Erbakan Ahmad | Transfer learning setup and fine-tuning experiments | transfer checkpoints, transfer metrics, confusion matrices |
-| Muhammad Ahtisham Bhatti | Report, slides, comparison, citations | `reports/Project_Report.tex`, `slides/Project_Presentation.tex` |
+| Muhammad Ahtisham Bhatti | Report, slides, comparison, citations | `reports/Project_Report.pdf`, `slides/Project_Presentation.pdf` |
 
 ## Reproducibility Checklist
 
