@@ -91,10 +91,12 @@ def draw_image_size_plot(metadata: pd.DataFrame) -> None:
     axes[0].set_ylabel("Height")
     axes[0].grid(alpha=0.25)
 
-    axes[1].hist(metadata["megapixels"], bins=24, color="#16a34a", alpha=0.85)
+    axes[1].hist(metadata["megapixels"], bins=24, range=(0, 0.5), color="#16a34a", alpha=0.85)
     axes[1].set_title("Original image-size distribution")
     axes[1].set_xlabel("Megapixels")
     axes[1].set_ylabel("Images")
+    axes[1].set_xlim(0, 0.5)
+    axes[1].set_xticks([0, 0.1, 0.2, 0.3, 0.4, 0.5])
     axes[1].grid(axis="y", alpha=0.25)
     fig.tight_layout()
     st.pyplot(fig, clear_figure=True)
